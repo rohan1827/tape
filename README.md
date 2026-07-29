@@ -4,7 +4,7 @@
 
 A from scratch implementation of reverse-mode autodiff inspired by PyTorch's autograd. The Tensor class is fully capable of building and a DAG and update gradients for any function thrown at it.
 
-## Design decision: how the graph is stored
+## How the graph is stored
 
 Each Tensor node holds on to a few class members like the parents -> that called the operation; a backward closure -> the local derivative of nodein accordance to its parents also respecting the chain rule.
 
@@ -12,7 +12,7 @@ harbours a backward() implementation that knows exactly the order to call the ba
 
 The order of the DAG was important to be preserved in case of a node that was being used in 2 separate operations, the graph has to treat each as a different branch and the order must make sure that the branches are resolved first before the main node is called. Thus marking the importance of the order backward() is called on the DAG.
 
-## Design decision: broadcast-gradient reduction
+## Broadcast-gradient reduction
 
 One big challenge was to handle the gradients of a broadcasted tensor. 
 forward pass for each operation is dependent on the numpy implementations of it.
